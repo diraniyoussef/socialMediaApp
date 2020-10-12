@@ -13,24 +13,11 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
+public class ExampleAdapter extends RecyclerView.Adapter<ExampleViewHolder> {
     private ArrayList<ExampleItem> mExampleList;
 
     public ExampleAdapter(ArrayList<ExampleItem> exampleList) {
         mExampleList = exampleList;
-    }
-
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
-
-        public ExampleViewHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-        }
     }
 
     @NonNull
@@ -53,5 +40,18 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     @Override
     public int getItemCount() {
         return mExampleList.size();
+    }
+}
+
+class ExampleViewHolder extends RecyclerView.ViewHolder {
+    public ImageView mImageView;
+    public TextView mTextView1;
+    public TextView mTextView2;
+
+    public ExampleViewHolder(View itemView) {
+        super(itemView);
+        mImageView = itemView.findViewById(R.id.imageView);
+        mTextView1 = itemView.findViewById(R.id.textView);
+        mTextView2 = itemView.findViewById(R.id.textView2);
     }
 }
