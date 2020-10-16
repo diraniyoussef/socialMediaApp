@@ -23,7 +23,7 @@ public class RecyclerMain extends AppCompatActivity {
     ArrayList<ExampleItem> mExampleList;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private Button buttonInsert;
@@ -75,6 +75,7 @@ public class RecyclerMain extends AppCompatActivity {
             return;
         }
         mExampleList.remove(position);
+        mRecyclerView.removeViewAt(position);
         mAdapter.notifyItemRemoved(position);
     }
 
@@ -93,7 +94,16 @@ public class RecyclerMain extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new ExampleAdapter(mExampleList);
+        mAdapter.setOnItemClickListener( new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                mExampleList.get(position).changeText1("clicked !");
+                mAdapter.notifyItemChanged(position);
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
 }

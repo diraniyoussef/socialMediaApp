@@ -16,15 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleViewHolder> {
     private ArrayList<ExampleItem> mExampleList;
 
+    private OnItemClickListener mListener;
+
     public ExampleAdapter(ArrayList<ExampleItem> exampleList) {
         mExampleList = exampleList;
+    }
+
+    public void setOnItemClickListener( OnItemClickListener listener ) {
+        mListener = listener;
     }
 
     @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_example_item, parent, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v);
+        ExampleViewHolder evh = new ExampleViewHolder(v, mListener);
         return evh;
     }
 
@@ -41,6 +47,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleViewHolder> {
     public int getItemCount() {
         return mExampleList.size();
     }
+
 }
 
 class ExampleViewHolder extends RecyclerView.ViewHolder {
@@ -48,10 +55,26 @@ class ExampleViewHolder extends RecyclerView.ViewHolder {
     public TextView mTextView1;
     public TextView mTextView2;
 
-    public ExampleViewHolder(View itemView) {
+    public ExampleViewHolder( View itemView, final OnItemClickListener listener ) {
         super(itemView);
         mImageView = itemView.findViewById(R.id.imageView);
         mTextView1 = itemView.findViewById(R.id.textView);
         mTextView2 = itemView.findViewById(R.id.textView2);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
+                    }
+                }
+            }
+        });
     }
+}
+
+interface OnItemClickListener {
+    void onItemClick(int position);
 }
