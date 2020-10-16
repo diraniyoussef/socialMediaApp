@@ -37,7 +37,11 @@ public class RecyclerMain extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_main);
         createExampleList();
         buildRecyclerView();
+        setButtons();
 
+    }
+
+    private void setButtons() {
         buttonInsert = findViewById(R.id.button_insert);
         buttonRemove = findViewById(R.id.button_remove);
         editTextInsert = findViewById(R.id.edittext_insert);
@@ -79,6 +83,7 @@ public class RecyclerMain extends AppCompatActivity {
         mAdapter.notifyItemRemoved(position);
     }
 
+
     public void createExampleList() {
         mExampleList = new ArrayList<>();
         mExampleList.add(new ExampleItem(R.drawable.ic_android, "Line 1", "Line 2"));
@@ -99,6 +104,11 @@ public class RecyclerMain extends AppCompatActivity {
             public void onItemClick(int position) {
                 mExampleList.get(position).changeText1("clicked !");
                 mAdapter.notifyItemChanged(position);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                removeItem(position);
             }
         });
 
